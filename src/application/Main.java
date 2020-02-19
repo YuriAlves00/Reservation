@@ -13,6 +13,7 @@ public class Main {
 
 		Scanner sc = new Scanner(System.in);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date now = new Date();
 
 		System.out.println("Enter the reservation date:");
 		System.out.println("Room Number");
@@ -21,7 +22,6 @@ public class Main {
 		Date checkIn = sdf.parse(sc.next());
 		System.out.println("Check-Out: (dd/MM/yyyy)");
 		Date checkOut = sdf.parse(sc.next());
-		Date now = new Date();
 
 		if (checkIn.before(now) || checkOut.before(now)) {
 			System.out.println("Error in reservation: Reservation dates for update must be future dates");
@@ -41,15 +41,10 @@ public class Main {
 			System.out.println("Check-Out: (dd/MM/yyyy)");
 			checkOut = sdf.parse(sc.next());
 
-			if (checkIn.before(now) || checkOut.before(now)) {
-				System.out.println("Error in reservation: Reservation dates for update must be future dates");
-
-			} else if (!checkOut.after(checkIn)) {
-				System.out.println("Error in reservation: Check-out Date must be after check-in Date ");
-
+			String error = reservation.updateDates(checkIn, checkOut);
+			if (error != null) {
+				System.out.println("Error in reservation: ");
 			} else {
-
-				reservation.updateDates(checkIn, checkOut);
 				System.out.println("Reservation: " + reservation);
 			}
 		}
